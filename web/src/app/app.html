@@ -1,0 +1,32 @@
+<h2>Login</h2>
+
+<input placeholder="Email" [(ngModel)]="email" />
+<br />
+
+<input placeholder="Password" type="password" [(ngModel)]="password" />
+<br />
+
+<button (click)="login()">Login</button>
+
+<p>{{ message }}</p>
+
+<p *ngIf="role">Role: {{ role }}</p>
+
+<div *ngIf="role">
+  <hr />
+
+  <input placeholder="New Task Title" [(ngModel)]="newTaskTitle" />
+  <button (click)="createTask()" *ngIf="role === 'OWNER' || role === 'ADMIN' || role === 'VIEWER'">Create Task</button>
+
+  <br /><br />
+
+  <button (click)="loadTasks()">Get All Tasks</button>
+
+  <ul>
+    <li *ngFor="let task of tasks">
+      {{ task.title }} - {{ task.status }}
+      <button (click)="updateTask(task, 'DONE')" *ngIf="role === 'OWNER' || role === 'ADMIN'">Update to Completed</button>
+      <button (click)="deleteTask(task)" *ngIf="role === 'OWNER'">Delete</button>
+    </li>
+  </ul>
+</div>
